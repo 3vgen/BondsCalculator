@@ -36,3 +36,4 @@ except Exception as err:
 finally:
     cur.close()
     conn.close()
+    print("hello world")
