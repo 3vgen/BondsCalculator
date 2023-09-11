@@ -17,7 +17,7 @@ def plus_days(some_date: date, num_of_days: int) -> date:
     return some_date
 
 
-def get_month_of_payments(next_coupon: date, coupon_period: int) -> list:
+def get_month_of_payments(next_coupon: date, coupon_period: int) -> list: #по купонному периоду и дате следующего купона получить выплаты за год
     current_year = date.today().year
     months_of_payments = []
 
