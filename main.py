@@ -3,7 +3,9 @@ from BondModel import BondModel
 from config import *
 
 
-def add_bond(ticker, count_of_bonds, cur, conn) -> None:
+def add_bond(ticker, count_of_bonds) -> None:
+    global cur
+    global conn
     bd = BondModel(ticker)
     query_for_main_info = "INSERT INTO bonds_information VALUES (%s, %s, %s, %s, %s, %s)"
 
@@ -25,7 +27,9 @@ def add_bond(ticker, count_of_bonds, cur, conn) -> None:
         print("[INFO] database error", err)
 
 
-def delete_bond(ticker, count_of_bonds, cur, conn)->None: #не доделано
+def delete_bond(ticker, count_of_bonds) -> None: #не доделано
+    global conn
+    global curr
     bd = BondModel(ticker)
     try:
         cur.execute(f"select bonds_count from bonds_information where ticker = \'{bd.sec_id}\'")
@@ -49,14 +53,7 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-
-
-delete_bond('RU000A105PP9', 2, cur, conn)
-
-
-
-
-
+add_bond('RU000A105PP9', 2)
 cur.close()
 conn.close()
 
