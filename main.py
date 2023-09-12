@@ -25,6 +25,22 @@ def add_bond(ticker, count_of_bonds, cur, conn) -> None:
         print("[INFO] database error", err)
 
 
+def delete_bond(ticker, count_of_bonds, cur, conn)->None: #не доделано
+    bd = BondModel(ticker)
+    try:
+        cur.execute(f"select bonds_count from bonds_information where ticker = \'{bd.sec_id}\'")
+        rows = cur.fetchall()
+        if rows[0][0] <= count_of_bonds:
+            cur.execute(f"delete from frequency_of_payment2 where bonds_ticker = \'{bd.sec_id}\'")
+            cur.execute(f"delete from bonds_information where ticker = \'{bd.sec_id}\'")
+        else:
+            cur.execute(f"update bonds_information set bonds_count = bonds_count - {count_of_bonds} where ticker = \'{bd.sec_id}\'")
+
+        conn.commit()
+    except Exception as err:
+        print("[INFO] database error", err)
+
+
 conn = psycopg2.connect(
     host=host,
     database=database,
@@ -33,8 +49,9 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-add_bond('RU000A106EZ0', 4, cur, conn)
 
+
+delete_bond('RU000A105PP9', 2, cur, conn)
 
 
 
