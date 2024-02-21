@@ -1,4 +1,5 @@
 import psycopg2
+import numpy
 from BondModel import BondModel
 from config import *
 
@@ -27,7 +28,7 @@ def add_bond(ticker, count_of_bonds) -> None:
         print("[INFO] database error", err)
 
 
-def delete_bond(ticker, count_of_bonds) -> None: #не доделано
+def delete_bond(ticker, count_of_bonds) -> None:
     global conn
     global curr
     bd = BondModel(ticker)
@@ -45,6 +46,13 @@ def delete_bond(ticker, count_of_bonds) -> None: #не доделано
         print("[INFO] database error", err)
 
 
+def show_all_bonds(): #вывод
+    global conn
+    global cur
+    cur.execute(f"select * from bonds_information")
+    rows = cur.fetchall()
+    print(rows[0])
+
 conn = psycopg2.connect(
     host=host,
     database=database,
@@ -53,7 +61,9 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-add_bond('RU000A105PP9', 2)
+add_bond('RU000A100D89', 1)
+# delete_bond('RU000A107043', 5)
+
 cur.close()
 conn.close()
 
