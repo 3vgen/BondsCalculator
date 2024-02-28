@@ -63,6 +63,7 @@ cur = conn.cursor()
 
 add_bond('RU000A100D89', 1)
 # delete_bond('RU000A107043', 5)
+print("Stroka")
 print("Hello World")
 cur.close()
 conn.close()
